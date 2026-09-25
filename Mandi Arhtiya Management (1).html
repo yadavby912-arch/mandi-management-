@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://127.0.0.1:5500/.vscode/managment.html -->
+<html lang="hi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mandi Arhtiya Management</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f1f5f9;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#065f46,#166534,#1d4ed8);
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+header h1{margin:0;font-size:30px}
+header p{margin:8px 0}
+
+.container{
+    width:96%;
+    max-width:1700px;
+    margin:20px auto;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 12px #0002;
+}
+
+.card h3{
+    margin:0;
+    font-size:14px;
+    color:#555;
+}
+
+.card p{
+    margin:10px 0 0;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.form-box,.report-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0002;
+    margin-bottom:20px;
+}
+
+h2{
+    margin-top:0;
+    color:#166534;
+}
+
+.section{
+    background:#f8fafc;
+    padding:16px;
+    border-radius:10px;
+    margin-top:18px;
+    border:1px solid #e2e8f0;
+}
+
+.section h3{
+    margin-top:0;
+    color:#1d4ed8;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:15px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,select{
+    width:100%;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.auto{
+    background:#e0f2fe;
+    font-weight:bold;
+    border:2px solid #38bdf8;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+button{
+    border:0;
+    padding:11px 17px;
+    border-radius:7px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.add{background:#16a34a}
+.update{background:#2563eb;display:none}
+.clear{background:#dc2626}
+.export{background:#7c3aed}
+.edit{background:#f59e0b;padding:7px 10px}
+.delete{background:#dc2626;padding:7px 10px}
+
+.search{margin-bottom:15px}
+
+.table-box{
+    overflow-x:auto;
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0002;
+}
+
+table{
+    width:100%;
+    min-width:2400px;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+    white-space:nowrap;
+}
+
+th{
+    background:#166534;
+    color:white;
+}
+
+.note{
+    margin-top:15px;
+    padding:14px;
+    background:#fff7ed;
+    border-left:5px solid #f97316;
+    border-radius:6px;
+    line-height:1.8;
+}
+
+@media(max-width:600px){
+    header h1{font-size:22px}
+    .container{width:98%}
+    .form-box,.report-box{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌾 मंडी आढ़ती Management System</h1>
+<p>किसान • आवक • खरीद • बिक्री • आढ़त • कटौती • भुगतान</p>
+</header>
+
+<div class="container">
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+
+<div class="card">
+<h3>कुल किसान</h3>
+<p id="farmers">2</p>
+</div>
+
+<div class="card">
+<h3>कुल बोरा</h3>
+<p id="bagsDashboard">220</p>
+</div>
+
+<div class="card">
+<h3>कुल KG</h3>
+<p id="kgDashboard">13200.00 KG</p>
+</div>
+
+<div class="card">
+<h3>कुल खरीद</h3>
+<p id="purchaseTotal">₹318000.00</p>
+</div>
+
+<div class="card">
+<h3>कुल बिक्री</h3>
+<p id="salesTotal">₹343200.00</p>
+</div>
+
+<div class="card">
+<h3>कुल आढ़त</h3>
+<p id="commissionTotal">₹5148.00</p>
+</div>
+
+<div class="card">
+<h3>कुल भुगतान</h3>
+<p id="paidTotal">₹60000.00</p>
+</div>
+
+<div class="card">
+<h3>कुल बाकी</h3>
+<p id="remainingTotal">₹271562.00</p>
+</div>
+
+</div>
+
+
+<!-- FORM -->
+
+<div class="form-box">
+
+<h2>➕ नई मंडी Entry</h2>
+
+<div class="grid">
+
+<div>
+<label>तारीख</label>
+<input type="date" id="date">
+</div>
+
+<div>
+<label>Entry No.</label>
+<input type="text" id="entryNo" placeholder="M-001">
+</div>
+
+<div>
+<label>👨‍🌾 किसान का नाम</label>
+<input type="text" id="farmer" placeholder="किसान का नाम">
+</div>
+
+<div>
+<label>मोबाइल</label>
+<input type="text" id="mobile" placeholder="Mobile">
+</div>
+
+<div>
+<label>गांव</label>
+<input type="text" id="village" placeholder="गांव">
+</div>
+
+<div>
+<label>🌾 Product</label>
+<input type="text" id="product" placeholder="गेहूं">
+</div>
+
+<div>
+<label>🧑‍💼 Buyer / व्यापारी</label>
+<input type="text" id="buyer" placeholder="Buyer">
+</div>
+
+</div>
+
+
+<!-- WEIGHT -->
+
+<div class="section">
+
+<h3>⚖️ माल / वजन</h3>
+
+<div class="grid">
+
+<div>
+<label>👜 Quantity / बोरा</label>
+<input type="number" id="bags" min="0" step="1" placeholder="100" oninput="calculateAll()">
+</div>
+
+<div>
+<label>⚖️ 1 बोरा में KG</label>
+<input type="number" id="kgPerBag" min="0" step="0.01" placeholder="60" oninput="calculateAll()">
+</div>
+
+<div>
+<label>✅ कुल KG</label>
+<input type="number" id="totalKg" class="auto" readonly="">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PURCHASE -->
+
+<div class="section">
+
+<h3>🛒 Purchase / खरीद</h3>
+
+<div class="grid">
+
+<div>
+<label>Purchase Price ₹/KG</label>
+<input type="number" id="purchasePrice" min="0" step="0.01" placeholder="25.00" oninput="calculateAll()">
+</div>
+
+<div>
+<label>💰 Total Purchase</label>
+<input type="number" id="purchaseAmount" class="auto" readonly="">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SALE -->
+
+<div class="section">
+
+<h3>💵 Sale / बिक्री</h3>
+
+<div class="grid">
+
+<div>
+<label>Selling Price ₹/KG</label>
+<input type="number" id="sellingPrice" min="0" step="0.01" placeholder="26.00" oninput="calculateAll()">
+</div>
+
+<div>
+<label>💰 Total Sale</label>
+<input type="number" id="saleAmount" class="auto" readonly="">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- COMMISSION -->
+
+<div class="section">
+
+<h3>💼 आढ़त / Commission</h3>
+
+<div class="grid">
+
+<div>
+<label>Commission / आढ़त %</label>
+<input type="number" id="commissionPercent" min="0" step="0.01" placeholder="2" oninput="calculateAll()">
+</div>
+
+<div>
+<label>✅ आढ़त Amount</label>
+<input type="number" id="commissionAmount" class="auto" readonly="">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- DEDUCTIONS -->
+
+<div class="section">
+
+<h3>📉 कटौती / Charges</h3>
+
+<div class="grid">
+
+<div>
+<label>Lever / Hamali ₹</label>
+<input type="number" id="lever" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>Tulai ₹</label>
+<input type="number" id="tulai" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>Bardana ₹</label>
+<input type="number" id="bardana" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>Mandi Fee ₹</label>
+<input type="number" id="mandiFee" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>Other Charge ₹</label>
+<input type="number" id="otherCharge" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>Advance ₹</label>
+<input type="number" id="advance" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>✅ कुल कटौती</label>
+<input type="number" id="totalDeduction" class="auto" readonly="">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PAYMENT -->
+
+<div class="section">
+
+<h3>💳 किसान भुगतान</h3>
+
+<div class="grid">
+
+<div>
+<label>किसान को देने योग्य</label>
+<input type="number" id="payable" class="auto" readonly="">
+</div>
+
+<div>
+<label>किसान को दिया ₹</label>
+<input type="number" id="paid" value="0" oninput="calculateAll()">
+</div>
+
+<div>
+<label>🔴 किसान का बाकी</label>
+<input type="number" id="remaining" class="auto" readonly="">
+</div>
+
+<div>
+<label>Payment Mode</label>
+<select id="paymentMode">
+<option>Cash</option>
+<option>UPI</option>
+<option>Bank</option>
+<option>Cheque</option>
+</select>
+</div>
+
+<div>
+<label>Remark</label>
+<input type="text" id="remark" placeholder="कोई जानकारी">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="note">
+
+<b>Automatic हिसाब:</b><br>
+
+कुल KG = Quantity × KG/बोरा<br>
+
+कुल खरीद = कुल KG × Purchase Price<br>
+
+कुल बिक्री = कुल KG × Selling Price<br>
+
+आढ़त = कुल बिक्री × Commission % ÷ 100<br>
+
+कुल कटौती = आढ़त + सभी Charges + Advance<br>
+
+किसान को देने योग्य = कुल बिक्री − कुल कटौती<br>
+
+किसान का बाकी = देने योग्य − Paid
+
+</div>
+
+
+<div class="buttons">
+
+<button class="add" id="addBtn" onclick="addEntry()">
+➕ Entry Save करें
+</button>
+
+<button class="update" id="updateBtn" onclick="updateEntry()">
+✏️ Update
+</button>
+
+<button class="clear" onclick="clearForm()">
+🗑️ Clear
+</button>
+
+<button class="export" onclick="exportCSV()">
+📥 Excel / CSV
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="report-box">
+
+<h2>📋 किसान / बिक्री हिसाब</h2>
+
+<input class="search" type="text" id="search" placeholder="🔍 किसान, Buyer, गांव, Product या Entry Search..." oninput="displayData()">
+
+</div>
+
+
+<!-- TABLE -->
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Sr.</th>
+<th>Date</th>
+<th>Entry</th>
+<th>किसान</th>
+<th>Mobile</th>
+<th>गांव</th>
+<th>Product</th>
+<th>Buyer</th>
+<th>बोरा</th>
+<th>KG/बोरा</th>
+<th>Total KG</th>
+<th>Purchase ₹/KG</th>
+<th>Total Purchase</th>
+<th>Selling ₹/KG</th>
+<th>Total Sale</th>
+<th>आढ़त %</th>
+<th>आढ़त</th>
+<th>Lever</th>
+<th>Tulai</th>
+<th>Bardana</th>
+<th>Mandi Fee</th>
+<th>Other</th>
+<th>Advance</th>
+<th>कुल कटौती</th>
+<th>देने योग्य</th>
+<th>Paid</th>
+<th>बाकी</th>
+<th>Payment</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody"><tr>
+
+<td>1</td>
+
+<td>2026-09-23</td>
+
+<td>1</td>
+
+<td>Bhupendra</td>
+
+<td>6306767322</td>
+
+<td>jodhpur navdiya</td>
+
+<td>gehun</td>
+
+<td>rajesh</td>
+
+<td>20</td>
+
+<td>60</td>
+
+<td>1200.00</td>
+
+<td>₹25.00</td>
+
+<td>₹30000.00</td>
+
+<td>₹26.00</td>
+
+<td>₹31200.00</td>
+
+<td>1.5%</td>
+
+<td>₹468.00</td>
+
+<td>₹200.00</td>
+
+<td>₹5.00</td>
+
+<td>₹20.00</td>
+
+<td>₹0.00</td>
+
+<td>₹0.00</td>
+
+<td>₹5000.00</td>
+
+<td>₹5693.00</td>
+
+<td>₹25507.00</td>
+
+<td>₹5000.00</td>
+
+<td>₹20507.00</td>
+
+<td>Cash</td>
+
+<td>
+
+<button class="edit" onclick="editEntry(0)">
+Edit
+</button>
+
+<button class="delete" onclick="deleteEntry(0)">
+Delete
+</button>
+
+</td>
+
+</tr><tr>
+
+<td>2</td>
+
+<td>2026-09-23</td>
+
+<td>2</td>
+
+<td>samarjeet</td>
+
+<td>6306767322</td>
+
+<td>jodhpur navdiya</td>
+
+<td>gehun</td>
+
+<td>rajpal</td>
+
+<td>200</td>
+
+<td>60</td>
+
+<td>12000.00</td>
+
+<td>₹24.00</td>
+
+<td>₹288000.00</td>
+
+<td>₹26.00</td>
+
+<td>₹312000.00</td>
+
+<td>1.5%</td>
+
+<td>₹4680.00</td>
+
+<td>₹10.00</td>
+
+<td>₹5.00</td>
+
+<td>₹50.00</td>
+
+<td>₹500.00</td>
+
+<td>₹0.00</td>
+
+<td>₹700.00</td>
+
+<td>₹5945.00</td>
+
+<td>₹306055.00</td>
+
+<td>₹55000.00</td>
+
+<td>₹251055.00</td>
+
+<td>UPI</td>
+
+<td>
+
+<button class="edit" onclick="editEntry(1)">
+Edit
+</button>
+
+<button class="delete" onclick="deleteEntry(1)">
+Delete
+</button>
+
+</td>
+
+</tr></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<script>
+
+let data = JSON.parse(
+localStorage.getItem("mandiArhtiyaData") || "[]"
+);
+
+let editIndex = -1;
+
+
+/* TODAY DATE */
+
+document.getElementById("date").value =
+new Date().toISOString().split("T")[0];
+
+
+/* NUMBER HELPER */
+
+function num(id){
+
+return parseFloat(
+document.getElementById(id).value
+) || 0;
+
+}
+
+
+/* CALCULATION */
+
+function calculateAll(){
+
+let bags = num("bags");
+
+let kgPerBag = num("kgPerBag");
+
+let purchasePrice = num("purchasePrice");
+
+let sellingPrice = num("sellingPrice");
+
+let commissionPercent = num("commissionPercent");
+
+
+/* TOTAL KG */
+
+let totalKg = bags * kgPerBag;
+
+document.getElementById("totalKg").value =
+totalKg.toFixed(2);
+
+
+/* PURCHASE */
+
+let purchaseAmount =
+totalKg * purchasePrice;
+
+document.getElementById("purchaseAmount").value =
+purchaseAmount.toFixed(2);
+
+
+/* SALE */
+
+let saleAmount =
+totalKg * sellingPrice;
+
+document.getElementById("saleAmount").value =
+saleAmount.toFixed(2);
+
+
+/* COMMISSION */
+
+let commissionAmount =
+saleAmount * commissionPercent / 100;
+
+document.getElementById("commissionAmount").value =
+commissionAmount.toFixed(2);
+
+
+/* CHARGES */
+
+let lever = num("lever");
+
+let tulai = num("tulai");
+
+let bardana = num("bardana");
+
+let mandiFee = num("mandiFee");
+
+let otherCharge = num("otherCharge");
+
+let advance = num("advance");
+
+
+/* TOTAL DEDUCTION */
+
+let totalDeduction =
+commissionAmount +
+lever +
+tulai +
+bardana +
+mandiFee +
+otherCharge +
+advance;
+
+document.getElementById("totalDeduction").value =
+totalDeduction.toFixed(2);
+
+
+/* PAYABLE */
+
+let payable =
+saleAmount - totalDeduction;
+
+document.getElementById("payable").value =
+payable.toFixed(2);
+
+
+/* PAID */
+
+let paid = num("paid");
+
+
+/* REMAINING */
+
+let remaining =
+payable - paid;
+
+document.getElementById("remaining").value =
+remaining.toFixed(2);
+
+}
+
+
+/* GET FORM */
+
+function getFormData(){
+
+calculateAll();
+
+return {
+
+date:document.getElementById("date").value,
+
+entryNo:document.getElementById("entryNo").value,
+
+farmer:document.getElementById("farmer").value,
+
+mobile:document.getElementById("mobile").value,
+
+village:document.getElementById("village").value,
+
+product:document.getElementById("product").value,
+
+buyer:document.getElementById("buyer").value,
+
+bags:num("bags"),
+
+kgPerBag:num("kgPerBag"),
+
+totalKg:num("totalKg"),
+
+purchasePrice:num("purchasePrice"),
+
+purchaseAmount:num("purchaseAmount"),
+
+sellingPrice:num("sellingPrice"),
+
+saleAmount:num("saleAmount"),
+
+commissionPercent:num("commissionPercent"),
+
+commissionAmount:num("commissionAmount"),
+
+lever:num("lever"),
+
+tulai:num("tulai"),
+
+bardana:num("bardana"),
+
+mandiFee:num("mandiFee"),
+
+otherCharge:num("otherCharge"),
+
+advance:num("advance"),
+
+totalDeduction:num("totalDeduction"),
+
+payable:num("payable"),
+
+paid:num("paid"),
+
+remaining:num("remaining"),
+
+paymentMode:document.getElementById("paymentMode").value,
+
+remark:document.getElementById("remark").value
+
+};
+
+}
+
+
+/* SAVE LOCAL STORAGE */
+
+function saveData(){
+
+localStorage.setItem(
+"mandiArhtiyaData",
+JSON.stringify(data)
+);
+
+}
+
+
+/* ADD */
+
+function addEntry(){
+
+let farmer =
+document.getElementById("farmer").value.trim();
+
+if(!farmer){
+
+alert("कृपया किसान का नाम डालें");
+
+return;
+
+}
+
+let item = getFormData();
+
+data.push(item);
+
+saveData();
+
+displayData();
+
+clearForm();
+
+alert("Entry Successfully Saved ✅");
+
+}
+
+
+/* DISPLAY */
+
+function displayData(){
+
+let tbody =
+document.getElementById("tableBody");
+
+let search =
+document.getElementById("search")
+.value.toLowerCase();
+
+tbody.innerHTML="";
+
+
+let farmerSet = new Set();
+
+let totalBags=0;
+let totalKg=0;
+let totalPurchase=0;
+let totalSale=0;
+let totalCommission=0;
+let totalPaid=0;
+let totalRemaining=0;
+
+
+data.forEach((item,index)=>{
+
+farmerSet.add(item.farmer);
+
+totalBags += Number(item.bags)||0;
+totalKg += Number(item.totalKg)||0;
+totalPurchase += Number(item.purchaseAmount)||0;
+totalSale += Number(item.saleAmount)||0;
+totalCommission += Number(item.commissionAmount)||0;
+totalPaid += Number(item.paid)||0;
+totalRemaining += Number(item.remaining)||0;
+
+
+let searchText = (
+
+(item.farmer||"")+" "+
+(item.mobile||"")+" "+
+(item.village||"")+" "+
+(item.product||"")+" "+
+(item.buyer||"")+" "+
+(item.entryNo||"")
+
+).toLowerCase();
+
+
+if(search && !searchText.includes(search)){
+return;
+}
+
+
+let tr=document.createElement("tr");
+
+
+tr.innerHTML=`
+
+<td>${index+1}</td>
+
+<td>${item.date}</td>
+
+<td>${item.entryNo}</td>
+
+<td>${item.farmer}</td>
+
+<td>${item.mobile}</td>
+
+<td>${item.village}</td>
+
+<td>${item.product}</td>
+
+<td>${item.buyer}</td>
+
+<td>${item.bags}</td>
+
+<td>${item.kgPerBag}</td>
+
+<td>${item.totalKg.toFixed(2)}</td>
+
+<td>₹${item.purchasePrice.toFixed(2)}</td>
+
+<td>₹${item.purchaseAmount.toFixed(2)}</td>
+
+<td>₹${item.sellingPrice.toFixed(2)}</td>
+
+<td>₹${item.saleAmount.toFixed(2)}</td>
+
+<td>${item.commissionPercent}%</td>
+
+<td>₹${item.commissionAmount.toFixed(2)}</td>
+
+<td>₹${item.lever.toFixed(2)}</td>
+
+<td>₹${item.tulai.toFixed(2)}</td>
+
+<td>₹${item.bardana.toFixed(2)}</td>
+
+<td>₹${item.mandiFee.toFixed(2)}</td>
+
+<td>₹${item.otherCharge.toFixed(2)}</td>
+
+<td>₹${item.advance.toFixed(2)}</td>
+
+<td>₹${item.totalDeduction.toFixed(2)}</td>
+
+<td>₹${item.payable.toFixed(2)}</td>
+
+<td>₹${item.paid.toFixed(2)}</td>
+
+<td>₹${item.remaining.toFixed(2)}</td>
+
+<td>${item.paymentMode}</td>
+
+<td>
+
+<button class="edit"
+onclick="editEntry(${index})">
+Edit
+</button>
+
+<button class="delete"
+onclick="deleteEntry(${index})">
+Delete
+</button>
+
+</td>
+
+`;
+
+tbody.appendChild(tr);
+
+});
+
+
+/* DASHBOARD */
+
+document.getElementById("farmers").innerText =
+farmerSet.size;
+
+document.getElementById("bagsDashboard").innerText =
+totalBags.toFixed(0);
+
+document.getElementById("kgDashboard").innerText =
+totalKg.toFixed(2)+" KG";
+
+document.getElementById("purchaseTotal").innerText =
+"₹"+totalPurchase.toFixed(2);
+
+document.getElementById("salesTotal").innerText =
+"₹"+totalSale.toFixed(2);
+
+document.getElementById("commissionTotal").innerText =
+"₹"+totalCommission.toFixed(2);
+
+document.getElementById("paidTotal").innerText =
+"₹"+totalPaid.toFixed(2);
+
+document.getElementById("remainingTotal").innerText =
+"₹"+totalRemaining.toFixed(2);
+
+}
+
+
+/* EDIT */
+
+function editEntry(index){
+
+let item=data[index];
+
+editIndex=index;
+
+
+document.getElementById("date").value=item.date;
+
+document.getElementById("entryNo").value=item.entryNo;
+
+document.getElementById("farmer").value=item.farmer;
+
+document.getElementById("mobile").value=item.mobile;
+
+document.getElementById("village").value=item.village;
+
+document.getElementById("product").value=item.product;
+
+document.getElementById("buyer").value=item.buyer;
+
+document.getElementById("bags").value=item.bags;
+
+document.getElementById("kgPerBag").value=item.kgPerBag;
+
+document.getElementById("purchasePrice").value=item.purchasePrice;
+
+document.getElementById("sellingPrice").value=item.sellingPrice;
+
+document.getElementById("commissionPercent").value=item.commissionPercent;
+
+document.getElementById("lever").value=item.lever;
+
+document.getElementById("tulai").value=item.tulai;
+
+document.getElementById("bardana").value=item.bardana;
+
+document.getElementById("mandiFee").value=item.mandiFee;
+
+document.getElementById("otherCharge").value=item.otherCharge;
+
+document.getElementById("advance").value=item.advance;
+
+document.getElementById("paid").value=item.paid;
+
+document.getElementById("paymentMode").value=item.paymentMode;
+
+document.getElementById("remark").value=item.remark;
+
+
+calculateAll();
+
+
+document.getElementById("addBtn").style.display="none";
+
+document.getElementById("updateBtn").style.display="inline-block";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* UPDATE */
+
+function updateEntry(){
+
+if(editIndex===-1)return;
+
+data[editIndex]=getFormData();
+
+saveData();
+
+displayData();
+
+clearForm();
+
+alert("Entry Updated ✅");
+
+}
+
+
+/* DELETE */
+
+function deleteEntry(index){
+
+if(confirm("क्या आप यह Entry delete करना चाहते हैं?")){
+
+data.splice(index,1);
+
+saveData();
+
+displayData();
+
+}
+
+}
+
+
+/* CLEAR */
+
+function clearForm(){
+
+document.getElementById("entryNo").value="";
+
+document.getElementById("farmer").value="";
+
+document.getElementById("mobile").value="";
+
+document.getElementById("village").value="";
+
+document.getElementById("product").value="";
+
+document.getElementById("buyer").value="";
+
+document.getElementById("bags").value="";
+
+document.getElementById("kgPerBag").value="";
+
+document.getElementById("purchasePrice").value="";
+
+document.getElementById("sellingPrice").value="";
+
+document.getElementById("commissionPercent").value="";
+
+document.getElementById("lever").value="0";
+
+document.getElementById("tulai").value="0";
+
+document.getElementById("bardana").value="0";
+
+document.getElementById("mandiFee").value="0";
+
+document.getElementById("otherCharge").value="0";
+
+document.getElementById("advance").value="0";
+
+document.getElementById("paid").value="0";
+
+document.getElementById("remark").value="";
+
+calculateAll();
+
+
+editIndex=-1;
+
+document.getElementById("addBtn").style.display="inline-block";
+
+document.getElementById("updateBtn").style.display="none";
+
+}
+
+
+/* EXCEL / CSV */
+
+function exportCSV(){
+
+if(data.length===0){
+
+alert("Export करने के लिए कोई Entry नहीं है");
+
+return;
+
+}
+
+
+let headers=[
+
+"Date",
+"Entry No",
+"Farmer",
+"Mobile",
+"Village",
+"Product",
+"Buyer",
+"Bags",
+"KG Per Bag",
+"Total KG",
+"Purchase Price",
+"Total Purchase",
+"Selling Price",
+"Total Sale",
+"Commission %",
+"Commission Amount",
+"Lever",
+"Tulai",
+"Bardana",
+"Mandi Fee",
+"Other Charge",
+"Advance",
+"Total Deduction",
+"Payable",
+"Paid",
+"Remaining",
+"Payment Mode",
+"Remark"
+
+];
+
+
+let rows=data.map(item=>[
+
+item.date,
+item.entryNo,
+item.farmer,
+item.mobile,
+item.village,
+item.product,
+item.buyer,
+item.bags,
+item.kgPerBag,
+item.totalKg,
+item.purchasePrice,
+item.purchaseAmount,
+item.sellingPrice,
+item.saleAmount,
+item.commissionPercent,
+item.commissionAmount,
+item.lever,
+item.tulai,
+item.bardana,
+item.mandiFee,
+item.otherCharge,
+item.advance,
+item.totalDeduction,
+item.payable,
+item.paid,
+item.remaining,
+item.paymentMode,
+item.remark
+
+]);
+
+
+let csv = "\uFEFF" +
+headers.join(",")+"\n";
+
+
+rows.forEach(row=>{
+
+csv += row.map(value=>{
+
+let text=String(value ?? "");
+
+text=text.replace(/"/g,'""');
+
+return `"${text}"`;
+
+}).join(",")+"\n";
+
+});
+
+
+let blob=new Blob(
+[csv],
+{type:"text/csv;charset=utf-8;"}
+);
+
+
+let url=URL.createObjectURL(blob);
+
+let a=document.createElement("a");
+
+a.href=url;
+
+a.download=
+"mandi_arhtiya_data_"+Date.now()+".csv";
+
+document.body.appendChild(a);
+
+a.click();
+
+document.body.removeChild(a);
+
+URL.revokeObjectURL(url);
+
+alert("Excel/CSV Download हो गया ✅");
+
+}
+
+
+/* START */
+
+displayData();
+
+calculateAll();
+
+</script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
