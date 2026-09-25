@@ -470,7 +470,23 @@ th{
 <label>Remark</label>
 <input type="text" id="remark" placeholder="कोई जानकारी">
 </div>
+<!-- PAID AMOUNT -->
+<div class="form-group">
+  <label>भुगतान की गई राशि (Paid Amount):</label>
+  <input type="number" id="paidAmount" placeholder="0" oninput="calculateBalance()">
+</div>
 
+<!-- REMAINING BALANCE (Auto Calculated) -->
+<div class="form-group">
+  <label>शेष राशि (Balance):</label>
+  <input type="number" id="balanceAmount" placeholder="0" readonly style="background:#f0f0f0;">
+</div>
+
+<!-- NEXT PAYMENT DATE -->
+<div class="form-group">
+  <label>अगली भुगतान तिथि (Next Payment Date):</label>
+  <input type="date" id="nextPaymentDate">
+</div>
 </div>
 
 </div>
@@ -1427,6 +1443,13 @@ alert("Excel/CSV Download हो गया ✅");
 displayData();
 
 calculateAll();
+	function calculateBalance() {
+  let netTotal = parseFloat(document.getElementById("netTotal")?.value || document.getElementById("netAmount")?.value || document.getElementById("total")?.value) || 0;
+  let paid = parseFloat(document.getElementById("paidAmount").value) || 0;
+  
+  let balance = netTotal - paid;
+  document.getElementById("balanceAmount").value = balance >= 0 ? balance : 0;
+}
 // PASSWORD LOGIC
 const CORRECT_PASSWORD = "1234"; // Yahan aap apna password badal sakte hain
 
