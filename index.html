@@ -479,7 +479,16 @@ th{
   <input type="date" id="nextPaymentDate">
 </div>
 </div>
+<!-- SELLING PRICE & PROFIT/LOSS -->
+<div>
+  <label>कुल बिक्री राशि (Selling Total ₹)</label>
+  <input type="number" id="sellingTotal" placeholder="0" oninput="calculateProfitLoss()">
+</div>
 
+<div>
+  <label>मुनाफा / घाटा (Profit / Loss ₹)</label>
+  <input type="text" id="profitLoss" placeholder="0" readonly style="background:#eef6ff; font-weight:bold;">
+</div>
 </div>
 
 
@@ -737,7 +746,29 @@ localStorage.getItem("mandiArhtiyaData") || "[]"
 
 let editIndex = -1;
 
+function calculateProfitLoss() {
+  let buyTotal = parseFloat(document.getElementById("netTotal")?.value || document.getElementById("netAmount")?.value || document.getElementById("total")?.value) || 0;
+  let sellTotal = parseFloat(document.getElementById("sellingTotal").value) || 0;
+  
+  if (sellTotal === 0) {
+    document.getElementById("profitLoss").value = "0";
+    document.getElementById("profitLoss").style.color = "black";
+    return;
+  }
 
+  let diff = sellTotal - buyTotal;
+  
+  if (diff > 0) {
+    document.getElementById("profitLoss").value = "+ " + diff.toFixed(2) + " (मुनाफा)";
+    document.getElementById("profitLoss").style.color = "green";
+  } else if (diff < 0) {
+    document.getElementById("profitLoss").value = "- " + Math.abs(diff).toFixed(2) + " (घाटा)";
+    document.getElementById("profitLoss").style.color = "red";
+  } else {
+    document.getElementById("profitLoss").value = "0 (बराबर)";
+    document.getElementById("profitLoss").style.color = "black";
+  }
+}
 /* TODAY DATE */
 
 document.getElementById("date").value =
