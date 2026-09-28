@@ -10,6 +10,11 @@
 *{box-sizing:border-box}
 
 body{
+	<!-- NAVIGATION TAB BUTTONS -->
+<div style="display: flex; justify-content: center; gap: 12px; margin: 20px 0; padding: 10px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <button id="btnMandi" onclick="switchModule('mandi')" style="padding: 10px 20px; font-weight: bold; border: none; border-radius: 6px; background: #27ae60; color: white; cursor: pointer;">🌾 मंडी आढ़त (Mandi)</button>
+  <button id="btnTrading" onclick="switchModule('trading')" style="padding: 10px 20px; font-weight: bold; border: none; border-radius: 6px; background: #e2e8f0; color: #333; cursor: pointer;">📈 ट्रेडिंग (Trading)</button>
+</div>
     margin:0;
     font-family:Arial,sans-serif;
     background:#f1f5f9;
@@ -1638,11 +1643,26 @@ window.addEventListener("DOMContentLoaded", () => {
     <input type="text" id="tradeNetPnL" readonly style="width:100%; padding:10px; font-weight:bold; font-size:18px; background:#ffffff; border:1px solid #ccc; border-radius:6px;">
   </div>
 </div>
+function switchModule(module) {
+  const mandi = document.getElementById('mandiModule') || document.querySelector('.container') || document.body.firstElementChild;
+  const trading = document.getElementById('tradingModule');
+  const btnMandi = document.getElementById('btnMandi');
+  const btnTrading = document.getElementById('btnTrading');
 
+  if (module === 'mandi') {
+    if (mandi) mandi.style.display = 'block';
+    if (trading) trading.style.display = 'none';
+    if (btnMandi) btnMandi.style.background = '#27ae60';
+    if (btnMandi) btnMandi.style.color = 'white';
+    if (btnTrading) btnTrading.style.background = '#e2e8f0';
+    if (btnTrading) btnTrading.style.color = '#333';
+  } else {
+    if (mandi) mandi.style.display = 'none';
+    if (trading) trading.style.display = 'block';
+    if (btnMandi) btnMandi.style.background = '#e2e8f0';
+    if (btnMandi) btnMandi.style.color = '#333';
+    if (btnTrading) btnTrading.style.background = '#1da1f2';
+    if (btnTrading) btnTrading.style.color = 'white';
+  }
+}
 </body></html>
-/* START */
-
-window.addEventListener('DOMContentLoaded', () => {
-    displayData();
-    calculateAll();
-});
